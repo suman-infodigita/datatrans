@@ -15,7 +15,7 @@ class WalleePaymentController extends Controller
 
     public function showForm()
     {
-        return view('payment.wallee-start');
+        return view('wallee.form');
     }
 
     public function startPayment(Request $request)
