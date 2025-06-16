@@ -22,3 +22,4 @@ Route::get('/pay', [PaymentController::class, 'showPaymentForm']);
 Route::post('/tokenize-card', [PaymentController::class, 'tokenizeCard']);
 Route::post('/process-payment', [PaymentController::class, 'processPayment']);
 Route::post('/clear-cards', [PaymentController::class, 'clearAliases']); // NEW
+Route::post('/init-payment',[PaymentController::class,'initPayment']);

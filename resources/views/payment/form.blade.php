@@ -39,6 +39,12 @@
         @csrf
         <button class="bg-red-500 text-white px-4 py-2 rounded">Clear Saved Cards</button>
     </form>
+    <hr>
+    <br>
+    <form method="POST" action="/init-payment" class="mb-4">
+        @csrf
+        <button class="bg-green-500 text-white px-4 py-2 rounded">Start Payment</button>
+    </form>
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', () => {

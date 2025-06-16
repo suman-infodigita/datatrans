@@ -14,19 +14,20 @@ class PaymentController extends Controller
 
     public function tokenizeCard(Request $request)
     {
-         if (app()->environment('local') && $request->card_number === '4242424242424242') {
-            $alias = 'mock-alias-' . rand(1000, 9999);
+        // if (app()->environment('local') && $request->card_number === '4242424242424242') {
+        //     // $alias = 'visa-' . rand(1000, 9999);
+        //     $alias = Str::upper(Str::random(20));;
 
-            $cards = session()->get('saved_cards', []);
-            $cards[] = [
-                'alias' => $alias,
-                'last4' => substr($request->card_number, -4),
-                'brand' => 'VISA',
-            ];
-            session()->put('saved_cards', $cards);
+        //     $cards = session()->get('saved_cards', []);
+        //     $cards[] = [
+        //         'alias' => $alias,
+        //         'last4' => substr($request->card_number, -4),
+        //         'brand' => 'VISA',
+        //     ];
+        //     session()->put('saved_cards', $cards);
 
-            return back()->with('success', 'Card MOCK-tokenized for testing.');
-        }
+        //     return back()->with('success', 'Card MOCK-tokenized for testing.');
+        // }
 
         $response = Http::withBasicAuth(env('DATATRANS_USERNAME'), env('DATATRANS_PASSWORD'))
             ->post(env('DATATRANS_BASE_URL') . '/v1/transactions/secureFields/tokenize', [
@@ -40,7 +41,9 @@ class PaymentController extends Controller
                     'name' => $request->cardholder_name,
                 ],
             ]);
+    
 
+        info([$response->status(), $response->body()]);
         if ($response->successful()) {
             $data = $response->json();
 
@@ -61,18 +64,18 @@ class PaymentController extends Controller
 
     public function processPayment(Request $request)
     {
-      
+        dd($request->all());
          if (app()->environment('local') && str_starts_with($request->alias, 'mock-alias-')) {
             return back()->with('success', 'MOCK Payment successful (no charge).');
          }
         $idempotencyKey = (string) Str::uuid();
-          dd($idempotencyKey);
+        //   dd($idempotencyKey);
         $payload = [
             'currency' => 'CHF',
             'refno' => 'Test-' . uniqid(),
             'amount' => 1000,
             'card' => [
-                'alias' => '24242SKMPRI42423',
+                'alias' => $request->alias,
                 'expiryMonth' => 12,
                 'expiryYear' => 29,
             ],
@@ -99,6 +102,22 @@ class PaymentController extends Controller
     {
         session()->forget('saved_cards');
         return back()->with('success', 'Saved cards cleared.');
+    }
+
+    public function initPayment(){
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Basic ' . base64_encode(env('DATATRANS_USERNAME') . ':' . env('DATATRANS_PASSWORD')),
+            'Content-Type' => 'application/json',
+        ])->post(env('DATATRANS_BASE_URL') . '/v1/transactions', [
+            'currency' => 'CHF',
+            'refno' => 'Test-1234',
+            'amount' => 1000,
+            'paymentMethods' => ['ECA'],
+        ]);
+
+        info([$response->status(), $response->body()]);
+        return redirect()->back();
     }
 
 }
