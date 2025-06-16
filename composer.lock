@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc019f2ac80dda3ad809ed2b50f0d591",
+    "content-hash": "60b2a43b60c0ef156f98dabf17e61314",
     "packages": [
         {
             "name": "brick/math",
@@ -5526,6 +5526,60 @@
                 }
             ],
             "time": "2024-11-21T01:49:47+00:00"
+        },
+        {
+            "name": "wallee/sdk",
+            "version": "4.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wallee-payment/php-sdk.git",
+                "reference": "b2ae47bb1827d6dfd6d784ed487e834b2385daf5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wallee-payment/php-sdk/zipball/b2ae47bb1827d6dfd6d784ed487e834b2385daf5",
+                "reference": "b2ae47bb1827d6dfd6d784ed487e834b2385daf5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Wallee\\Sdk\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "wallee AG",
+                    "email": "info@wallee.com",
+                    "homepage": "https://www.wallee.com"
+                }
+            ],
+            "description": "wallee SDK for PHP",
+            "homepage": "http://github.com/wallee-payment/php-sdk",
+            "keywords": [
+                "api",
+                "payment",
+                "php",
+                "sdk",
+                "wallee"
+            ],
+            "support": {
+                "issues": "https://github.com/wallee-payment/php-sdk/issues",
+                "source": "https://github.com/wallee-payment/php-sdk/tree/4.8.0"
+            },
+            "time": "2025-03-24T13:23:13+00:00"
         },
         {
             "name": "webmozart/assert",
