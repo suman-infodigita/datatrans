@@ -24,14 +24,14 @@ class WalleeService
 
         $transaction = new TransactionCreate();
         $transaction->setCurrency('CHF'); 
-        $transaction->setAmount($amount);
+        // $transaction->setAmount($amount);
         $transaction->setMerchantReference($orderId);
 
         $lineItem = new \Wallee\Sdk\Model\LineItemCreate();
         $lineItem->setName('Order ' . $orderId);
         $lineItem->setQuantity(1);
         $lineItem->setAmountIncludingTax($amount);
-        $lineItem->setUniqueId("item-1");
+        $lineItem->setUniqueId("item-1".uniqid());
         $lineItem->setType(\Wallee\Sdk\Model\LineItemType::PRODUCT);
 
         $transaction->setLineItems([$lineItem]);
