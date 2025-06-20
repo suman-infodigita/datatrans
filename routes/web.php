@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\WalleePaymentController;
+use App\Http\Controllers\TokenPaymentController;
+use App\Http\Controllers\WalleeWebhookController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,3 +33,12 @@ Route::get('/wallee-payment', [WalleePaymentController::class, 'showForm'])->nam
 Route::post('/wallee-payment/start', [WalleePaymentController::class, 'startPayment'])->name('wallee.start');
 Route::get('/wallee-payment/success', [WalleePaymentController::class, 'paymentSuccess'])->name('wallee.success');
 Route::get('/wallee-payment/fail', [WalleePaymentController::class, 'paymentFail'])->name('wallee.fail');
+
+//tokenized payment
+Route::get('/card/register', [TokenPaymentController::class, 'registerCard'])->name('token.register');
+Route::get('/card/charge', [TokenPaymentController::class, 'chargeForm'])->name('token.charge.form');
+Route::post('/card/charge', [TokenPaymentController::class, 'charge'])->name('token.charge');
+Route::get('/payment/success', [TokenPaymentController::class, 'success'])->name('token.success');
+Route::get('/payment/fail', [TokenPaymentController::class, 'fail'])->name('token.failed');
+Route::post('/wallee/webhook', [WalleeWebhookController::class, 'handle'])->name('wallee.webhook');
+Route::get('/payment/status', [TokenPaymentController::class, 'transactionStatus'])->name('token.status');
